@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: ${SPRING_APPLICATION_NAME:config-server}
+encrypt:
+  key-store:
+    alias: ${ENCRYPT_KEYSTORE_ALIAS:gbshopmart}
+    location: ${ENCRYPT_KEYSTORE_LOCATION:file:///Users/artemkropotov/java_projects/geekbrains/gb-shop-mart/server.jks}
+    password: ${ENCRYPT_KEYSTORE_PASSWORD:123456}
+
+
+#  keytool -genkeypair -alias gbshopmart -keyalg RSA \
+#  -dname "CN=Web Server,OU=Unit,O=geekbrains,L=Moscow,C=Russia" \
+#  -keypass 123456 -keystore server.jks -storepass 123456
