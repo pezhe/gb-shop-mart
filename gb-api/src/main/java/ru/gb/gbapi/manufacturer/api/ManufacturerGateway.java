@@ -11,7 +11,6 @@ import ru.gb.gbapi.manufacturer.dto.ManufacturerDto;
 import java.net.URI;
 import java.util.List;
 
-@FeignClient(url = "http://localhost:8080/api/v1/manufacturer", name = "ManufacturerGateway")
 public interface ManufacturerGateway {
 
     @GetMapping

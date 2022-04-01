@@ -1,6 +1,7 @@
 package ru.gb.gbshopmart.web.rest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/manufacturer")
+@Slf4j
 public class ManufacturerController {
     
     private final ManufacturerService manufacturerService;
@@ -33,7 +35,8 @@ public class ManufacturerController {
                 return new ResponseEntity<>(manufacturer, HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        log.error("Retryer");
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PostMapping

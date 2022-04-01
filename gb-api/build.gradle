@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'ru.gb'
-version = '0.0.2-mart'
+version = '0.0.4-mart'
 sourceCompatibility = '11'
 
 configurations {
