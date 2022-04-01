@@ -1,4 +1,4 @@
-package ru.gb.gbshopmart.entity.enums;
+package ru.gb.gbapi.common.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

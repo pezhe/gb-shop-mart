@@ -1,8 +1,8 @@
-package ru.gb.gbshopmart.web.dto;
+package ru.gb.gbapi.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import ru.gb.gbshopmart.entity.enums.Status;
+import ru.gb.gbapi.common.enums.Status;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;

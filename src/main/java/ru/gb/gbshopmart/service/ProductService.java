@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.gb.gbapi.common.enums.Status;
+import ru.gb.gbapi.product.dto.ProductDto;
 import ru.gb.gbshopmart.dao.ManufacturerDao;
 import ru.gb.gbshopmart.dao.ProductDao;
 import ru.gb.gbshopmart.entity.Product;
-import ru.gb.gbshopmart.entity.enums.Status;
 import ru.gb.gbshopmart.web.dto.mapper.ProductMapper;
-import ru.gb.gbshopmart.web.dto.ProductDto;
 
 
 import java.util.List;

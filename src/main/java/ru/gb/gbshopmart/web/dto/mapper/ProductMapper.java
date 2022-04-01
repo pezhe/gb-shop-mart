@@ -2,10 +2,10 @@ package ru.gb.gbshopmart.web.dto.mapper;
 
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
+import ru.gb.gbapi.product.dto.ProductDto;
 import ru.gb.gbshopmart.dao.ManufacturerDao;
 import ru.gb.gbshopmart.entity.Manufacturer;
 import ru.gb.gbshopmart.entity.Product;
-import ru.gb.gbshopmart.web.dto.ProductDto;
 
 import java.util.NoSuchElementException;
 

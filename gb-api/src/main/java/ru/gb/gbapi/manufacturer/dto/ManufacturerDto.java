@@ -1,4 +1,4 @@
-package ru.gb.gbshopmart.web.dto;
+package ru.gb.gbapi.manufacturer.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
