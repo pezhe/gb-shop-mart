@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
+import ru.gb.gbapi.manufacturer.dto.ManufacturerDto;
 import ru.gb.gbshopmart.dao.ManufacturerDao;
 import ru.gb.gbshopmart.entity.Manufacturer;
 import ru.gb.gbshopmart.web.dto.mapper.ManufacturerMapper;
