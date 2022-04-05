@@ -33,7 +33,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    implementation files('../lib/gb-api-0.0.4-mart-plain.jar')
+    implementation files('../lib/gb-api-0.0.6-mart-plain.jar')
 }
 
 dependencyManagement {

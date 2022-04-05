@@ -2,11 +2,13 @@ package ru.gb.gbapi.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import ru.gb.gbapi.category.dto.CategoryDto;
 import ru.gb.gbapi.common.enums.Status;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -27,4 +29,5 @@ public class ProductDto {
     @NotNull
     private Status status;
     private String manufacturer;
+    private Set<CategoryDto> categories;
 }

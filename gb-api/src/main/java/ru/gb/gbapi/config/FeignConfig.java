@@ -15,6 +15,7 @@ import org.springframework.cloud.openfeign.support.SpringEncoder;
 import org.springframework.cloud.openfeign.support.SpringMvcContract;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.HttpMessageConverter;
 import ru.gb.gbapi.category.api.CategoryGateway;
 import ru.gb.gbapi.category.dto.CategoryDto;
@@ -28,52 +29,28 @@ import static feign.FeignException.errorStatus;
 import static feign.Util.RETRY_AFTER;
 
 @Configuration
-@EnableFeignClients(clients = {CategoryGateway.class,
-        ProductGateway.class})
+@EnableFeignClients
 @EnableConfigurationProperties(GbApiProperties.class)
 @RequiredArgsConstructor
+@Import(value = {FeignClientFactory.class})
 public class FeignConfig {
 
     private final GbApiProperties gbApiProperties;
-    private final ObjectFactory<HttpMessageConverters> messageConverters;
+    private final FeignClientFactory feignClientFactory;
+
+    @Bean
+    public CategoryGateway categoryGateway() {
+        return feignClientFactory.newFeignClient(CategoryGateway.class, gbApiProperties.getEndpoint().getCategoryUrl());
+    }
 
     @Bean
     public ManufacturerGateway manufacturerGateway() {
-        return Feign.builder()
-                .encoder(new SpringEncoder(this.messageConverters))
-                .decoder(new OptionalDecoder(new ResponseEntityDecoder(new SpringDecoder(this.messageConverters))))
-                .errorDecoder(errorDecoder())
-                .options(new Request.Options(
-                        gbApiProperties.getConnection().getConnectTimeout(),
-                        TimeUnit.SECONDS,
-                        gbApiProperties.getConnection().getReadTimeout(),
-                        TimeUnit.SECONDS,
-                        true
-                ))
-                .logger(new Slf4jLogger(ManufacturerGateway.class))
-                .logLevel(Logger.Level.FULL)
-                .retryer(new Retryer.Default(
-                        gbApiProperties.getConnection().getPeriod(),
-                        gbApiProperties.getConnection().getMaxPeriod(),
-                        gbApiProperties.getConnection().getMaxAttempts()
-                ))
-                .contract(new SpringMvcContract())
-                .target(ManufacturerGateway.class, gbApiProperties.getEndpoint().getManufacturerUrl());
+        return feignClientFactory.newFeignClient(ManufacturerGateway.class, gbApiProperties.getEndpoint().getManufacturerUrl());
     }
 
-    private ErrorDecoder errorDecoder() {
-        return (methodKey, response) -> {
-            FeignException exception = errorStatus(methodKey, response);
-            if (exception.status() == 500 || exception.status() == 503) {
-                return new RetryableException(
-                        response.status(),
-                        exception.getMessage(),
-                        response.request().httpMethod(),
-                        exception,
-                        null,
-                        response.request());
-            }
-            return exception;
-        };
+    @Bean
+    public ProductGateway productGateway() {
+        return feignClientFactory.newFeignClient(ProductGateway.class, gbApiProperties.getEndpoint().getProductUrl());
     }
+
 }

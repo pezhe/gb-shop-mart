@@ -8,7 +8,6 @@ import ru.gb.gbapi.category.dto.CategoryDto;
 
 import java.util.List;
 
-@FeignClient(url = "http://localhost:8080/api/v1/category", name = "CategoryGateway")
 public interface CategoryGateway {
     
     @GetMapping

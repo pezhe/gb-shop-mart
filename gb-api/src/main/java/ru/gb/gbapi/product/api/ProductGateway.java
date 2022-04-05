@@ -8,7 +8,6 @@ import ru.gb.gbapi.product.dto.ProductDto;
 
 import java.util.List;
 
-@FeignClient(url = "http://localhost:8080/api/v1/product", name = "ProductGateway")
 public interface ProductGateway {
 
     @GetMapping
