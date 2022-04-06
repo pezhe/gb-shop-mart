@@ -47,19 +47,20 @@ public class Product extends InfoEntity {
                 ", title='" + title + '\'' +
                 ", cost=" + cost +
                 ", manufactureDate=" + manufactureDate +
-//                ", manufacturer=" + manufacturer.getName() +
+                ", manufacturer=" + manufacturer.getName() +
                 "}\n";
     }
 
     @Builder
     public Product(Long id, int version, String createdBy, LocalDateTime createdDate, String lastModifiedBy,
                    LocalDateTime lastModifiedDate, String title, BigDecimal cost, LocalDate manufactureDate,
-                   Manufacturer manufacturer, Status status) {
+                   Manufacturer manufacturer, Status status, Set<Category> categories) {
         super(id, version, createdBy, createdDate, lastModifiedBy, lastModifiedDate);
         this.title = title;
         this.cost = cost;
         this.manufactureDate = manufactureDate;
         this.manufacturer = manufacturer;
         this.status = status;
+        this.categories = categories;
     }
 }

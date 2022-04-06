@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gb.gbapi.common.enums.Status;
 import ru.gb.gbapi.product.dto.ProductDto;
+import ru.gb.gbshopmart.dao.CategoryDao;
 import ru.gb.gbshopmart.dao.ManufacturerDao;
 import ru.gb.gbshopmart.dao.ProductDao;
 import ru.gb.gbshopmart.entity.Product;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductDao productDao;
     private final ManufacturerDao manufacturerDao;
+    private final CategoryDao categoryDao;
     private final ProductMapper productMapper;
 
     @Transactional(propagation = Propagation.NEVER, isolation = Isolation.DEFAULT)
@@ -37,7 +39,7 @@ public class ProductService {
 
     @Transactional
     public ProductDto save(final ProductDto productDto) {
-        Product product = productMapper.toProduct(productDto, manufacturerDao);
+        Product product = productMapper.toProduct(productDto, manufacturerDao, categoryDao);
         if (product.getId() != null) {
             productDao.findById(productDto.getId()).ifPresent(
                     (p) -> product.setVersion(p.getVersion())
