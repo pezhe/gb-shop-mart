@@ -12,7 +12,7 @@ spring:
     config:
       server:
         git:
-          uri: ${GIT_URI:/Users/artemkropotov/java_projects/geekbrains/gb-settings-mart}
+          uri: ${GIT_URI:https://github.com/kropotov-geekbrains/gb-settings-mart}
           clone-on-start: true
           username: ${GIT_USERNAME:geek}
           password: ${GIT_PASSWORD:geek}
