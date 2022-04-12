@@ -29,7 +29,6 @@ class ManufacturerControllerIntegTest {
     @Autowired
     ObjectMapper objectMapper;
 
-
     @Test
     @Order(1)
     void testSaveManufacturerTest() throws Exception {
