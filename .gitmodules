@@ -1,0 +1,3 @@
+[submodule "gb-api-mart"]
+	path = gb-api-mart
+	url = git@github.com:kropotov-geekbrains/gb-api-mart.git
