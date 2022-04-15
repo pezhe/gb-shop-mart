@@ -49,7 +49,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 
-    implementation files('lib/gb-api-mart-0.0.7-mart-plain.jar')
+    implementation files('lib/gb-api-mart-0.0.11-mart-plain.jar')
 }
 
 dependencyManagement {
