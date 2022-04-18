@@ -5,10 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.gb.gbapi.manufacturer.dto.ManufacturerDto;
 import ru.gb.gbshopmart.dao.ManufacturerDao;
 import ru.gb.gbshopmart.entity.Manufacturer;
-import ru.gb.gbshopmart.entity.enums.Status;
-import ru.gb.gbshopmart.web.dto.ManufacturerDto;
 import ru.gb.gbshopmart.web.dto.mapper.ManufacturerMapper;
 
 import java.util.List;
