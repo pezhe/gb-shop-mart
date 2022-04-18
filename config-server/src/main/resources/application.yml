@@ -1,0 +1,23 @@
+# localhost:8888/{profile}/{application}/{label}
+# localhost:8888/{application}-{profile}.yml
+# localhost:8888/{label}/{application}-{profile}.yml
+security:
+  endpoint:
+    decrypt:
+      enabled: true
+server:
+  port: ${PORT:8888}
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${GIT_URI:/Users/artemkropotov/java_projects/geekbrains/gb-settings-mart}
+          clone-on-start: true
+          username: ${GIT_USERNAME:geek}
+          password: ${GIT_PASSWORD:geek}
+        default-label: master
+  security:
+    user:
+      name: ${SECURITY_USER:geek_user}
+      password: ${SECURITY_PASS:geek_pass}

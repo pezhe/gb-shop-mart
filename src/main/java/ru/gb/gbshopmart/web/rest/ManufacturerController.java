@@ -1,21 +1,22 @@
 package ru.gb.gbshopmart.web.rest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.gb.gbapi.manufacturer.dto.ManufacturerDto;
 import ru.gb.gbshopmart.service.ManufacturerService;
-import ru.gb.gbshopmart.web.dto.ManufacturerDto;
 
 import java.net.URI;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-// @RequestMapping("/api/v1/manufacturer")
-@RequestMapping("/manufacturer")
+@RequestMapping("/api/v1/manufacturer")
+@Slf4j
 public class ManufacturerController {
     
     private final ManufacturerService manufacturerService;
@@ -34,7 +35,8 @@ public class ManufacturerController {
                 return new ResponseEntity<>(manufacturer, HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        log.error("Retryer");
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PostMapping

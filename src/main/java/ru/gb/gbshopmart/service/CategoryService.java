@@ -5,13 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.gb.gbapi.category.dto.CategoryDto;
 import ru.gb.gbshopmart.dao.CategoryDao;
 import ru.gb.gbshopmart.entity.Category;
-import ru.gb.gbshopmart.web.dto.CategoryDto;
 import ru.gb.gbshopmart.web.dto.mapper.CategoryMapper;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +25,8 @@ public class CategoryService {
     public CategoryDto save(final CategoryDto categoryDto) {
         Category category = categoryMapper.toCategory(categoryDto);
         if (category.getId() != null) {
-            categoryDao.findById(categoryDto.getCategoryId()).ifPresent(
-                    (c) -> category.setVersion(c.getVersion())
+            categoryDao.findById(categoryDto.getId()).ifPresent(
+                    (p) -> category.setVersion(p.getVersion())
             );
         }
         return categoryMapper.toCategoryDto(categoryDao.save(category));
@@ -50,5 +50,4 @@ public class CategoryService {
             log.error(e.getMessage());
         }
     }
-
 }
