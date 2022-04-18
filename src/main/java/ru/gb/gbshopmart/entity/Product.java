@@ -33,6 +33,12 @@ public class Product extends InfoEntity {
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
 
+    // в базу данных в таблицу product колонка category_id пока не добавлена
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;

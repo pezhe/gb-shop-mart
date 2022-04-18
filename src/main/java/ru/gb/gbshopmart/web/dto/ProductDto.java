@@ -27,4 +27,6 @@ public class ProductDto {
     @NotNull
     private Status status;
     private String manufacturer;
+    private String category;
+
 }
