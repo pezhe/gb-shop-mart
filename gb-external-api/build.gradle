@@ -39,8 +39,10 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
-    implementation files('../lib/gb-api-mart-0.0.13-mart-plain.jar')
+
+    implementation files('../lib/gb-api-mart-0.0.14-mart-plain.jar')
 
     implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.4.2.Final'
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'

@@ -14,3 +14,6 @@ values (1, 1),
        (3, 1),
        (4, 1),
        (2, 2);
+
+
+select * from account_user;
