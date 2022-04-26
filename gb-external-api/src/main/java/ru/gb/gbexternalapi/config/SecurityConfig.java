@@ -14,14 +14,18 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.gb.gbexternalapi.security.jwt.JwtConfigurer;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final String LOGIN_ENDPOINT = "/api/v1/auth/login";
     public static final String USER_ENDPOINT = "/api/v1/user";
+
+    private final JwtConfigurer jwtConfigurer;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -38,17 +42,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         );
         http.csrf().disable();
         http.httpBasic().disable();
+        http.apply(jwtConfigurer);
     }
 
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
 }
