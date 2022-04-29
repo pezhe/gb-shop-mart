@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 //@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-class CategoryControllerIntegTest {
+class CategoryRestControllerIntegTest {
 
     private final static String CATEGORY_TITLE = "Fruit";
     private final static String UPDATED_CATEGORY_TITLE = "Vegetables";

@@ -33,7 +33,7 @@ class ManufacturerControllerMockitoTest {
     ManufacturerService manufacturerService;
 
     @InjectMocks
-    ManufacturerController manufacturerController;
+    ManufacturerRestController manufacturerRestController;
 
     List<ManufacturerDto> manufacturers = new ArrayList<>();
 
@@ -44,7 +44,7 @@ class ManufacturerControllerMockitoTest {
         manufacturers.add(ManufacturerDto.builder().manufacturerId(1L).name("Apple").build());
         manufacturers.add(ManufacturerDto.builder().manufacturerId(2L).name("Microsoft").build());
 
-        mockMvc = MockMvcBuilders.standaloneSetup(manufacturerController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(manufacturerRestController).build();
     }
 
     @Test
@@ -78,7 +78,7 @@ class ManufacturerControllerMockitoTest {
         given(manufacturerService.findAll()).willReturn(manufacturers);
 
         // when
-        List<ManufacturerDto> manufacturerList = manufacturerController.getManufacturerList();
+        List<ManufacturerDto> manufacturerList = manufacturerRestController.getManufacturerList();
 
         // then
         then(manufacturerService).should().findAll();

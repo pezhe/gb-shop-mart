@@ -4,10 +4,13 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ru.gb.gbapi.common.enums.OrderStatus;
 import ru.gb.gbshopmart.entity.common.InfoEntity;
+import ru.gb.gbshopmart.entity.security.AccountUser;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -17,9 +20,6 @@ import java.util.Set;
 @Table(name = "shop_order")
 @EntityListeners(AuditingEntityListener.class)
 public class Order extends InfoEntity {
-
-    @Column(name = "ADDRESS")
-    private String address;
 
     @Column(name = "FIRSTNAME")
     private String firstname;
@@ -40,6 +40,23 @@ public class Order extends InfoEntity {
     @Column(name = "DELIVERY_DATE")
     private LocalDate deliveryDate;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private AccountUser accountUser;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
+    List<OrderItem> orderItems;
+
+    @Column(name = "price")
+    private BigDecimal price;
+
+    @Column(name = "delivery_price")
+    private BigDecimal deliveryPrice;
+
+    @ManyToOne
+    @JoinColumn(name = "delivery_address_id")
+    private Address deliveryAddress;
+
     @ManyToMany
     @JoinTable(
             name = "product_order",
@@ -50,16 +67,21 @@ public class Order extends InfoEntity {
 
     @Builder
     public Order(Long id, int version, String createdBy, LocalDateTime createdDate, String lastModifiedBy,
-                 LocalDateTime lastModifiedDate, String address, String firstname, String lastname, String phone,
-                 String mail, OrderStatus status, LocalDate deliveryDate, Set<Product> products) {
+                 LocalDateTime lastModifiedDate, String firstname, String lastname, String phone, String mail,
+                 OrderStatus status, LocalDate deliveryDate, AccountUser accountUser, List<OrderItem> orderItems,
+                 BigDecimal price, BigDecimal deliveryPrice, Address deliveryAddress, Set<Product> products) {
         super(id, version, createdBy, createdDate, lastModifiedBy, lastModifiedDate);
-        this.address = address;
         this.firstname = firstname;
         this.lastname = lastname;
         this.phone = phone;
         this.mail = mail;
         this.status = status;
         this.deliveryDate = deliveryDate;
+        this.accountUser = accountUser;
+        this.orderItems = orderItems;
+        this.price = price;
+        this.deliveryPrice = deliveryPrice;
+        this.deliveryAddress = deliveryAddress;
         this.products = products;
     }
 }
