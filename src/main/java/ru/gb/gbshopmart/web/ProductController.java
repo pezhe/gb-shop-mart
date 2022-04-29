@@ -28,7 +28,6 @@ public class ProductController {
     private final ProductImageService productImageService;
 
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ADMIN')")
     public String getProductList(Model model) {
         model.addAttribute("products", productService.findAll());
         return "product/product-list";
@@ -50,7 +49,6 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    @PreAuthorize("hasAnyAuthority('product.read')")
     public String info(Model model, @PathVariable(name = "productId") Long id) {
         ProductDto productDto;
         if (id != null) {

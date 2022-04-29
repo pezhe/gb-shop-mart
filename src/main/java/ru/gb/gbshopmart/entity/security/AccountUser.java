@@ -30,6 +30,7 @@ public class AccountUser implements UserDetails {
     private String lastname;
 
     private String email;
+    private String phone;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
