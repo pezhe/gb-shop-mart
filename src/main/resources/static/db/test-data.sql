@@ -51,4 +51,4 @@ insert into user_role(USER_ID, ROLE_ID)
 values (1, 2),
        (2, 1);
 
-select * from user_role;
+select * from product;

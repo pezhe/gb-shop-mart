@@ -14,6 +14,7 @@ import ru.gb.gbshopmart.service.ProductImageService;
 import ru.gb.gbshopmart.service.ProductService;
 
 import javax.imageio.ImageIO;
+import javax.validation.Valid;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 

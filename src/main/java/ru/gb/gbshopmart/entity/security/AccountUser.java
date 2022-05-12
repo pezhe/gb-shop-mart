@@ -1,6 +1,7 @@
 package ru.gb.gbshopmart.entity.security;
 
 import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @Builder
 @Entity
 @Table(name = "ACCOUNT_USER")
+@EntityListeners(AuditingEntityListener.class)
 public class AccountUser implements UserDetails {
 
     @Id

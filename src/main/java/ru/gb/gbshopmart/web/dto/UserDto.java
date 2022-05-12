@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.gb.gbshopmart.security.validation.FieldMatch;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +16,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldMatch(first = "password", second = "matchingPassword", message = "Пароли должны совпадать")
 public class UserDto {
     @JsonIgnore
     private Long id;
@@ -22,7 +24,11 @@ public class UserDto {
     @Size(min = 3, message = "username length must be greater than 2 symbols")
     private String username;
     @NotNull(message = "is required")
+    @Size(min = 8, message = "required 8 symbols")
     private String password;
+    @NotNull(message = "is required")
+    @Size(min = 8, message = "required 8 symbols")
+    private String matchingPassword;
     @NotBlank(message = "is required")
     private String firstname;
     @NotBlank(message = "is required")

@@ -54,6 +54,11 @@ public class ProductService {
         return productMapper.toProductDto(productDao.findById(id).orElse(null));
     }
 
+    @Transactional(readOnly = true)
+    public Product findProductById(Long id) {
+        return productDao.findById(id).orElse(null);
+    }
+
 
     public List<ProductDto> findAll() {
         return productDao.findAll().stream().map(productMapper::toProductDto).collect(Collectors.toList());
