@@ -33,14 +33,14 @@ public class GbShopMartApplication {
         return (args -> {
 //            categoryService.save(CategoryDto.builder().title("Напитки").build());
 //            manufacturerService.save(ManufacturerDto.builder().name("Pepsi Co").build());
-            productService.save(ProductDto.builder()
-                            .categories(new HashSet<>(categoryService.findAll()))
-                            .manufacturer(manufacturerService.findById(1L).getName())
-                            .title("Fanta")
-                            .cost(new BigDecimal("100.00"))
-                            .manufactureDate(LocalDate.now())
-                            .status(Status.ACTIVE)
-                    .build());
+//            productService.save(ProductDto.builder()
+//                            .categories(new HashSet<>(categoryService.findAll()))
+//                            .manufacturer(manufacturerService.findById(1L).getName())
+//                            .title("Fanta")
+//                            .cost(new BigDecimal("100.00"))
+//                            .manufactureDate(LocalDate.now())
+//                            .status(Status.ACTIVE)
+//                    .build());
         });
     }
 

@@ -34,14 +34,16 @@ public class CartController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteProductFromCart() {
-        // todo дз написать метод удаления
-         return "stub";
+    public String deleteProductFromCart(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
+        cartService.removeFromCart(httpServletRequest.getSession(), id);
+        String referer = httpServletRequest.getHeader("referer");
+        return "redirect:" + referer;
     }
 
     @GetMapping("/reset")
-    public String resetCart() {
-        // todo дз написать метод очистки корзины
-        return "stub";
+    public String resetCart(HttpServletRequest httpServletRequest) {
+        cartService.resetCart(httpServletRequest.getSession());
+        String referer = httpServletRequest.getHeader("referer");
+        return "redirect:" + referer;
     }
 }
