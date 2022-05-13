@@ -15,7 +15,7 @@
 <div th:replace="~{common/navbar :: navi(ProductForm)}" />
 
 <div class="container">
-<form class="form-horizontal" th:action="@{/product}" th:object="${product}" method="post">
+<form class="form-horizontal" th:action="@{/product}" th:object="${productDto}" method="post" enctype="multipart/form-data">
     <input type="hidden" th:field="*{id}">
     <div class="col-md-8">
         <div class="input-group mb-3">
@@ -49,8 +49,48 @@
 
     </div>
 
-<!--    todo добавить сюда список категорий с множественным выбором-->
-<!--    todo добавить сюда список производителей с единственно возможным выбором-->
+    <div class="col-md-8">
+        <label for="manufacturer-id">Производитель:</label>
+        <select class="form-select" id="manufacturer-id" th:field="*{manufacturer}">
+            <option th:each="current : ${manufacturers}"
+                    th:value="${current.name}"
+                    th:text="${current.name}"></option>
+        </select>
+
+    </div>
+
+    <div class="col-md-8">
+        <select class="form-select"  th:field="*{categories}" multiple="multiple">
+            <option th:each="category : ${categoryService.findAll()}"
+                    th:value="${category.id}"
+                    th:text="${category.title}"></option>
+        </select>
+
+    </div>
+
+    <div class="col-md-8">
+        <div class="input-group mb-3">
+            <label for="short-description-id">Краткое описание</label>
+            <input type="text" class="form-control" id="short-description-id"
+                   aria-describedby="inputGroup-sizing-default" th:field="*{shortDescription}">
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="input-group mb-3">
+            <label for="full-description-id">Подробное описание</label>
+            <input type="text" class="form-control" id="full-description-id"
+                   aria-describedby="inputGroup-sizing-default" th:field="*{fullDescription}">
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="image">Изображение</span>
+            <input type="file" name="file" class="form-control-file" accept="image/*">
+        </div>
+    </div>
+
     <div class="col-12">
         <button class="btn btn-primary" type="submit">Сохранить</button>
     </div>

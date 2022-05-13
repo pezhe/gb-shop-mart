@@ -9,15 +9,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import ru.gb.gbapi.common.enums.Status;
 import ru.gb.gbapi.product.dto.ProductDto;
 import ru.gb.gbshopmart.dao.CategoryDao;
 import ru.gb.gbshopmart.dao.ManufacturerDao;
 import ru.gb.gbshopmart.dao.ProductDao;
 import ru.gb.gbshopmart.entity.Product;
+import ru.gb.gbshopmart.entity.ProductImage;
 import ru.gb.gbshopmart.web.dto.mapper.ProductMapper;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,6 +33,7 @@ public class ProductService {
     private final ManufacturerDao manufacturerDao;
     private final ProductMapper productMapper;
     private final CategoryDao categoryDao;
+    private final ProductImageService productImageService;
 
     @Transactional(propagation = Propagation.NEVER, isolation = Isolation.DEFAULT)
     public long count() {
@@ -38,16 +42,39 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDto save(final ProductDto productDto) {
+    public ProductDto save(final ProductDto productDto, MultipartFile file) {
         Product product = productMapper.toProduct(productDto, manufacturerDao, categoryDao);
+
+        if (file !=null && !file.isEmpty()) {
+            String pathToSavedImage = productImageService.save(file);
+            ProductImage productImage = ProductImage.builder()
+                    .path(pathToSavedImage)
+                    .product(product)
+                    .build();
+            product.addImage(productImage);
+        }
+
         if (product.getId() != null) {
             productDao.findById(productDto.getId()).ifPresent(
                     (p) -> product.setVersion(p.getVersion())
             );
         }
+        if (product.getManufactureDate() == null) {
+            product.setManufactureDate(LocalDate.now());
+        }
         return productMapper.toProductDto(productDao.save(product));
     }
 
+
+    @Transactional
+    public ProductDto save(final ProductDto productDto) {
+        return save(productDto, null);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Product> findByTitle(String title) {
+        return productDao.findByTitle(title);
+    }
 
     @Transactional(readOnly = true)
     public ProductDto findById(Long id) {

@@ -8,8 +8,11 @@ import ru.gb.gbshopmart.entity.Category;
 import ru.gb.gbshopmart.entity.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductDao extends JpaRepository<Product, Long> {
+    Optional<Product> findByTitle(String title);
+
     List<Product> findAllByStatus(Status status);
     List<Product> findAllByStatus(Status status, Pageable pageable);
     List<Product> findAllByStatus(Status status, Sort sort);

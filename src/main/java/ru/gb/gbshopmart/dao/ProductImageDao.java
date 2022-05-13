@@ -8,6 +8,6 @@ import ru.gb.gbshopmart.entity.ProductImage;
 
 public interface ProductImageDao extends JpaRepository<ProductImage, Long> {
 
-    @Query(value = "SELECT product_image.path FROM product_image WHERE product_image.id = :id LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT product_image.path FROM product_image WHERE product_image.product_id = :id LIMIT 1", nativeQuery = true)
     String findImageNameByProductId(@Param("id") Long id);
 }

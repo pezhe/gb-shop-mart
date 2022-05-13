@@ -5,9 +5,11 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.gb.gbapi.product.dto.ProductDto;
-import ru.gb.gbshopmart.entity.Product;
 import ru.gb.gbshopmart.service.CategoryService;
 import ru.gb.gbshopmart.service.ManufacturerService;
 import ru.gb.gbshopmart.service.ProductImageService;
@@ -43,8 +45,8 @@ public class ProductController {
         } else {
             productDto = new ProductDto();
         }
-        model.addAttribute("product", productDto);
-        model.addAttribute("categoryList", categoryService.findAll());
+        model.addAttribute("productDto", productDto); // вопрос
+        model.addAttribute("categoryService", categoryService);
         model.addAttribute("manufacturers", manufacturerService.findAll());
         return "product/product-form";
     }
@@ -64,8 +66,21 @@ public class ProductController {
     // @DateTimeFormat если будут проблемы с получением даты из шаблона подставитьт эту аннотацию
     @PostMapping
     @PreAuthorize("hasAnyAuthority('product.create', 'product.update')")
-    public String saveProduct(ProductDto productDto) {
-        productService.save(productDto);
+    public String saveProduct(@Valid @ModelAttribute("productDto") ProductDto productDto,
+                              BindingResult bindingResult,
+                              Model model,
+                              @RequestParam("file") MultipartFile file) {
+        if (productDto.getId() == null && productService.findByTitle(productDto.getTitle()).isPresent()) {
+            bindingResult.addError(new ObjectError("productDto.title", "Товар с таким названием уже существует"));
+        }
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("productDto", productDto);
+            model.addAttribute("categoryService", categoryService);
+            model.addAttribute("manufacturers", manufacturerService.findAll());
+            return "product/product-form";
+        }
+        productService.save(productDto, file);
         return "redirect:/product/all";
     }
 
@@ -78,10 +93,10 @@ public class ProductController {
 
     // todo ДЗ* - сделать поддержку множества картинок для для страницы подробной информации с продуктами
     @GetMapping(value = "images/{id}", produces = MediaType.IMAGE_PNG_VALUE)
-    public byte[] getImage(@PathVariable Long id) throws IOException {
+    public @ResponseBody byte[] getImage(@PathVariable Long id) throws IOException {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ImageIO.write(productImageService.loadFileAsResource(id), "png", byteArrayOutputStream);
+            ImageIO.write(productImageService.loadProductImageAsResource(id), "png", byteArrayOutputStream);
             return byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
             throw e; // todo ДЗ - заменить на ProductImageNotFoundException
