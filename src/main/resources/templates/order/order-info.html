@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Продукт</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div th:replace="~{common/navbar :: navi(OrderForm)}" />
+
+<div class="container">
+    <h2 th:text="${'Имя: ' + order.firstname}"></h2>
+    <h2 th:text="${'Фамилия: ' + order.lastname}"></h2>
+    <h2 th:text="${'Телефон: ' + order.phone}"></h2>
+    <h2 th:text="${'Электронная почта: ' + order.mail}"></h2>
+    <h2 th:text="${'Статус: ' + order.status}"></h2>
+    <h2 th:text="${'Дата поставки: ' + order.deliveryDate}"></h2>
+    <h2 th:text="${'Сумма заказа: ' + order.price}"></h2>
+    <h2 th:text="${'Стоимость поставки: ' + order.deliveryPrice}"></h2>
+    <h2 th:text="${'Адрес поставки: ' + order.deliveryAddress}"></h2>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Наименование</th>
+            <th scope="col">Цена за ед.</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Сумма</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="orderItem, i : ${order.orderItems}" th:attr="prod_index=${orderItem.id}">
+            <td th:text="${i.count}"></td>
+            <td th:text="${orderItem.product.title}"></td>
+            <td th:text="${orderItem.itemPrice}"></td>
+            <td th:text="${orderItem.quantity}"></td>
+            <td th:text="${orderItem.totalPrice}"></td>
+        </tr>
+        <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td>Итого заказ:</td>
+            <td th:text="${order.price}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div th:replace="~{common/footer :: footerBlock}" />
+</body>
+</html>
