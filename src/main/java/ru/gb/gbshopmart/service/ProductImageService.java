@@ -52,9 +52,9 @@ public class ProductImageService {
     }
 
 
-    public BufferedImage loadProductImageAsResource(Long id) throws IOException {
+    public BufferedImage loadProductImageAsResource(Long id, Integer count) throws IOException {
         try {
-            String imageName = productImageDao.findImageNameByProductId(id);
+            String imageName = productImageDao.findImageNameByProductIdAndCount(id, count);
             Resource resource = loadAsResource(path, imageName);
             if (resource.exists()) {
                 return ImageIO.read(resource.getFile());
@@ -120,4 +120,7 @@ public class ProductImageService {
         return filename;
     }
 
+    public Integer countImages(Long id) {
+        return productImageDao.countImages(id);
+    }
 }
