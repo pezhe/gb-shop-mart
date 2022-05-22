@@ -10,6 +10,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.gb.gbapi.product.dto.ProductDto;
+import ru.gb.gbshopmart.exceptions.ProductImageNotFoundException;
 import ru.gb.gbshopmart.service.CategoryService;
 import ru.gb.gbshopmart.service.ManufacturerService;
 import ru.gb.gbshopmart.service.ProductImageService;
@@ -54,12 +55,15 @@ public class ProductController {
     @GetMapping("/{productId}")
     public String info(Model model, @PathVariable(name = "productId") Long id) {
         ProductDto productDto;
+        Integer imagesCount;
         if (id != null) {
             productDto = productService.findById(id);
+            imagesCount = productImageService.countImages(id);
         } else {
             return "redirect:/product/all";
         }
         model.addAttribute("product", productDto);
+        model.addAttribute("imagesCount", imagesCount);
         return "product/product-info";
     }
 
@@ -91,15 +95,15 @@ public class ProductController {
         return "redirect:/product/all";
     }
 
-    // todo ДЗ* - сделать поддержку множества картинок для для страницы подробной информации с продуктами
     @GetMapping(value = "images/{id}", produces = MediaType.IMAGE_PNG_VALUE)
-    public @ResponseBody byte[] getImage(@PathVariable Long id) throws IOException {
+    public @ResponseBody byte[] getImage(@PathVariable Long id,
+                                         @RequestParam(required = false, defaultValue = "0") Integer count) {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ImageIO.write(productImageService.loadProductImageAsResource(id), "png", byteArrayOutputStream);
+            ImageIO.write(productImageService.loadProductImageAsResource(id, count), "png", byteArrayOutputStream);
             return byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
-            throw e; // todo ДЗ - заменить на ProductImageNotFoundException
+            throw new ProductImageNotFoundException("image not found", e);
         }
     }
 
