@@ -55,7 +55,7 @@ public class Order extends InfoEntity {
 
     @ManyToOne
     @JoinColumn(name = "delivery_address_id")
-    private Address deliveryAddress;
+    private Address address;
 
     @ManyToMany
     @JoinTable(
@@ -69,7 +69,7 @@ public class Order extends InfoEntity {
     public Order(Long id, int version, String createdBy, LocalDateTime createdDate, String lastModifiedBy,
                  LocalDateTime lastModifiedDate, String firstname, String lastname, String phone, String mail,
                  OrderStatus status, LocalDate deliveryDate, AccountUser accountUser, List<OrderItem> orderItems,
-                 BigDecimal price, BigDecimal deliveryPrice, Address deliveryAddress, Set<Product> products) {
+                 BigDecimal price, BigDecimal deliveryPrice, Address address, Set<Product> products) {
         super(id, version, createdBy, createdDate, lastModifiedBy, lastModifiedDate);
         this.firstname = firstname;
         this.lastname = lastname;
@@ -81,7 +81,7 @@ public class Order extends InfoEntity {
         this.orderItems = orderItems;
         this.price = price;
         this.deliveryPrice = deliveryPrice;
-        this.deliveryAddress = deliveryAddress;
+        this.address = address;
         this.products = products;
     }
 }
