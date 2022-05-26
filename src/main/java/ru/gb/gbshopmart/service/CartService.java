@@ -2,7 +2,6 @@ package ru.gb.gbshopmart.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.gb.gbapi.product.dto.ProductDto;
 import ru.gb.gbshopmart.entity.Product;
 import ru.gb.gbshopmart.web.model.Cart;
 

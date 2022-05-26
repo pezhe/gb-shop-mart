@@ -27,7 +27,7 @@ public class Cart {
                     .product(product)
                     .itemPrice(product.getCost())
                     .quantity(0)
-                    .id(0L)
+                    //.id(0L)
                     .totalPrice(BigDecimal.ZERO)
                     .build();
             items.add(orderItem);
